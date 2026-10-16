@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lua CODES/SCRIPT - [{(「AZURA_K666/PANEL」)}]</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Hiệu ứng 3D cho nút Discord */
+        .discord-btn-3d {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 6px 0 0 #374151, 0 10px 15px -3px rgba(0, 0, 0, 0.4);
+        }
+        .discord-btn-3d:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 0 #374151, 0 15px 20px -3px rgba(88, 101, 242, 0.3);
+        }
+        .discord-btn-3d:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 0 #374151, 0 5px 8px -2px rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col items-center py-10 px-4">
+
+    <div class="w-full max-w-3xl">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-blue-500 bg-clip-text text-transparent mb-2">
+                CODES/SCRIPT - [{(「AZURA_K666/PANEL」)}]
+            </h1>
+            <p class="text-slate-400 text-sm">kho web script của「AZURA_K666/PANEL」</p>
+        </header>
+
+        <!-- Khung hiển thị và copy đường dẫn Web HTTPS -->
+        <div class="bg-slate-900 border border-cyan-500/40 rounded-xl p-4 shadow-xl mb-6">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-xs font-semibold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                    <i class="fa-solid fa-globe"></i> Đường dẫn Web HTTPS:// Trực tiếp
+                </span>
+                <div class="flex gap-2">
+                    <a id="web-link-btn" href="#" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition active:scale-95">
+                        <i class="fa-solid fa-external-link-alt"></i> Mở Web
+                    </a>
+                    <button onclick="copyWebLink(this)" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition active:scale-95">
+                        <i class="fa-regular fa-copy"></i> Copy Link
+                    </button>
+                </div>
+            </div>
+            <input type="text" id="web-url-input" readonly class="w-full bg-slate-950 text-emerald-300 font-mono text-xs p-3 rounded-lg border border-slate-800 focus:outline-none select-all" value="">
+        </div>
+
+        <!-- Nút Discord 3D cực đẹp -->
+        <div class="mb-8">
+            <a href="https://discord.gg/vJpduemMH" target="_blank" rel="noopener noreferrer" 
+               class="discord-btn-3d flex items-center justify-center gap-3 w-full bg-gradient-to-r from-indigo-600 to-blue-600 border border-indigo-500/40 text-white font-semibold py-3.5 px-6 rounded-xl text-sm md:text-base tracking-wide">
+                <i class="fa-brands fa-discord text-2xl text-indigo-200 animate-pulse"></i>
+                <span>Tham gia Discord chính thức của AZURA_K666</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-indigo-300 opacity-80"></i>
+            </a>
+        </div>
+
+        <div class="space-y-6" id="script-container">
+            
+            <!-- Item 1 -->
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-lg transition hover:border-slate-700">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400">RemoteSpy V2 - Theo dõi FireServer / InvokeServer</span>
+                    <button onclick="copyScript(this, 0)" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition active:scale-95">
+                        <i class="fa-regular fa-copy"></i> Sao chép
+                    </button>
+                </div>
+                <textarea readonly class="w-full h-20 bg-slate-950 text-slate-300 font-mono text-xs p-3 rounded-lg border border-slate-800 focus:outline-none resize-none">--📡 RemoteSpy V2 - Theo dõi FireServer / InvokeServer
+loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/SimpleSpyV3/main.lua"))()</textarea>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-lg transition hover:border-slate-700">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400">AZURA_K666/PANEL Tăng tốc v1</span>
+                    <button onclick="copyScript(this, 1)" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition active:scale-95">
+                        <i class="fa-regular fa-copy"></i> Sao chép
+                    </button>
+                </div>
+                <textarea readonly class="w-full h-20 bg-slate-950 text-slate-300 font-mono text-xs p-3 rounded-lg border border-slate-800 focus:outline-none resize-none">-- 「AZURA_K666/PANEL」 tăng tốc v1
+loadstring(game:HttpGet("https://pastefy.app/oi1L5X4D/raw?part=V%E1%BA%B7n%20tay%20ga"))()</textarea>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-lg transition hover:border-slate-700">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400">Dex Explorer Plus</span>
+                    <button onclick="copyScript(this, 2)" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition active:scale-95">
+                        <i class="fa-regular fa-copy"></i> Sao chép
+                    </button>
+                </div>
+                <textarea readonly class="w-full h-20 bg-slate-950 text-slate-300 font-mono text-xs p-3 rounded-lg border border-slate-800 focus:outline-none resize-none">loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Dex-Explorer-plus-50432"))()</textarea>
+            </div>
+
+            <!-- Item 4 -->
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-lg transition hover:border-slate-700">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400">AZURA_K666/PANEL Bypass SV</span>
+                    <button onclick="copyScript(this, 3)" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition active:scale-95">
+                        <i class="fa-regular fa-copy"></i> Sao chép
+                    </button>
+                </div>
+                <textarea readonly class="w-full h-20 bg-slate-950 text-slate-300 font-mono text-xs p-3 rounded-lg border border-slate-800 focus:outline-none resize-none">-- [{「AZURA_K666/PANEL」 bypass sv}]
+loadstring(game:HttpGet("https://pastefy.app/MzktwQsh/raw"))()</textarea>
+            </div>
+
+            <!-- Item 5 -->
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-lg transition hover:border-slate-700">
+                <div class="flex justify-between items-center mb-2">
+                    <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400">AZURA_K666/PANEL Anim Log</span>
+                    <button onclick="copyScript(this, 4)" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition active:scale-95">
+                        <i class="fa-regular fa-copy"></i> Sao chép
+                    </button>
+                </div>
+                <textarea readonly class="w-full h-20 bg-slate-950 text-slate-300 font-mono text-xs p-3 rounded-lg border border-slate-800 focus:outline-none resize-none">-- [{「AZURA_K666/PANEL」 anim log}]
+loadstring(game:HttpGet("https://pastefy.app/aMtrWYLT/raw?part=Anim%20log"))()</textarea>
+            </div>
+
+        </div>
+
+        <footer class="text-center mt-10 text-xs text-slate-500">
+            &copy; THANK YOU ĐÃ ĐỒNG HÀNH TỚI CUỐI SCRIPT CỦA TÔI XINH CHÂN THÀNH CẢM ƠN 🥳🥳🥳
+        </footer>
+    </div>
+
+    <script>
+        // Tự động nhận diện và hiển thị link HTTPS hiện tại của trang web
+        window.addEventListener('DOMContentLoaded', () => {
+            const currentUrl = window.location.href;
+            const webUrlInput = document.getElementById('web-url-input');
+            const webLinkBtn = document.getElementById('web-link-btn');
+
+            if (currentUrl.startsWith('http://') || currentUrl.startsWith('https://')) {
+                webUrlInput.value = currentUrl;
+                webLinkBtn.href = currentUrl;
+            } else {
+                // Nếu đang mở bằng file cục bộ / content://, cung cấp hướng dẫn hoặc thông báo
+                webUrlInput.value = "Hãy tải file lên GitHub Pages, Vercel hoặc Netlify để nhận link https:// chính thức!";
+                webLinkBtn.href = "#";
+                webLinkBtn.onclick = (e) => {
+                    e.preventDefault();
+                    alert("Bạn cần host file này lên một dịch vụ web (như GitHub Pages, Netlify...) để có link https:// hoàn chỉnh.");
+                };
+            }
+        });
+
+        function copyWebLink(btn) {
+            const webUrlInput = document.getElementById('web-url-input');
+            webUrlInput.select();
+            webUrlInput.setSelectionRange(0, 99999);
+
+            let success = false;
+            try {
+                success = document.execCommand('copy');
+            } catch (err) {}
+
+            if (!success && navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(webUrlInput.value);
+            }
+
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Đã chép link!';
+            btn.classList.remove('bg-cyan-600', 'hover:bg-cyan-500');
+            btn.classList.add('bg-emerald-600', 'hover:bg-emerald-500');
+
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
+                btn.classList.add('bg-cyan-600', 'hover:bg-cyan-500');
+            }, 2000);
+        }
+
+        function copyScript(btn, index) {
+            const textareas = document.querySelectorAll('textarea');
+            const textToCopy = textareas[index].value;
+
+            document.addEventListener('copy', function(e) {
+                e.clipboardData.setData('text/plain', textToCopy);
+                e.preventDefault();
+            }, { once: true });
+
+            let success = false;
+            try {
+                success = document.execCommand('copy');
+            } catch (err) {
+                console.error('Lỗi khi copy bằng execCommand', err);
+            }
+
+            if (!success && navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(textToCopy).catch(err => {
+                    console.error('Không thể sao chép: ', err);
+                });
+            }
+
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Đã chép!';
+            btn.classList.remove('bg-cyan-600', 'hover:bg-cyan-500');
+            btn.classList.add('bg-emerald-600', 'hover:bg-emerald-500');
+
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
+                btn.classList.add('bg-cyan-600', 'hover:bg-cyan-500');
+            }, 2000);
+        }
+    </script>
+</body>
+  </html>
+  
