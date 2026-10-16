@@ -9,14 +9,46 @@
     <style>
         /* Hiệu ứng nền động bắt mắt */
         body {
-            background: linear-gradient(135deg, #020617 0%, #0f172a 50%, #020617 100%);
+            background: linear-gradient(135deg, #030712 0%, #0f172a 50%, #020617 100%);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
+            position: relative;
+            overflow-x: hidden;
         }
         @keyframes gradientBG {
             0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
             100% { background-position: 0% 50%; }
+        }
+
+        /* Hiệu ứng đốm sáng nền lung linh */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(6, 182, 212, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+            z-index: -1;
+            border-radius: 50%;
+            animation: floatGlow 10s ease-in-out infinite alternate;
+        }
+        body::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            right: -100px;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, rgba(0, 0, 0, 0) 70%);
+            z-index: -1;
+            border-radius: 50%;
+            animation: floatGlow 12s ease-in-out infinite alternate-reverse;
+        }
+        @keyframes floatGlow {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(40px) scale(1.1); }
         }
 
         /* Hiệu ứng 3D cho nút Discord */
@@ -34,11 +66,11 @@
         }
 
         /* Hiệu ứng nhấn nút tổng quát */
-        .btn-click-effect {
+        .btn-press {
             transition: transform 0.1s ease, background-color 0.2s ease, box-shadow 0.2s ease;
         }
-        .btn-click-effect:active {
-            transform: scale(0.95);
+        .btn-press:active {
+            transform: scale(0.95) translateY(2px);
         }
     </style>
 </head>
@@ -52,25 +84,26 @@
             <p class="text-slate-400 text-sm">kho web script của「AZURA_K666/PANEL」</p>
         </header>
 
-        <!-- Khung tìm kiếm Script -->
-        <div class="mb-6 relative">
-            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
-                <i class="fa-solid fa-magnifying-glass"></i>
+        <!-- Thanh tìm kiếm Script -->
+        <div class="relative mb-6">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-cyan-400">
+                <i class="fa-solid fa-search"></i>
             </div>
-            <input type="text" id="search-input" onkeyup="filterScripts()" placeholder="Tìm kiếm tên script (ví dụ: bypass sv, remotespy, tăng tốc...)" class="w-full bg-slate-900/90 text-slate-100 font-medium text-sm pl-10 pr-4 py-3.5 rounded-xl border border-cyan-500/30 focus:outline-none focus:border-cyan-400 focus:ring-2 focus:ring-cyan-500/20 shadow-lg transition">
+            <input type="text" id="search-input" onkeyup="filterScripts()" placeholder="Tìm kiếm tên script hoặc từ khóa (ví dụ: bypass, remote, anim...)..." 
+                class="w-full bg-slate-900/90 backdrop-blur text-slate-200 placeholder-slate-500 text-sm pl-10 pr-4 py-3 rounded-xl border border-slate-800 focus:border-cyan-500 focus:outline-none shadow-lg transition">
         </div>
 
         <!-- Khung hiển thị và copy đường dẫn Web HTTPS -->
-        <div class="bg-slate-900/90 border border-cyan-500/40 rounded-xl p-4 shadow-xl mb-6 backdrop-blur-md">
+        <div class="bg-slate-900/90 backdrop-blur border border-cyan-500/40 rounded-xl p-4 shadow-xl mb-6">
             <div class="flex justify-between items-center mb-2">
                 <span class="text-xs font-semibold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
                     <i class="fa-solid fa-globe"></i> Đường dẫn Web HTTPS:// Trực tiếp
                 </span>
                 <div class="flex gap-2">
-                    <a id="web-link-btn" href="#" target="_blank" class="bg-emerald-600 hover:bg-emerald-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 btn-click-effect">
+                    <a id="web-link-btn" href="#" target="_blank" class="btn-press bg-emerald-600 hover:bg-emerald-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
                         <i class="fa-solid fa-external-link-alt"></i> Mở Web
                     </a>
-                    <button onclick="copyWebLink(this)" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 btn-click-effect">
+                    <button onclick="copyWebLink(this)" class="btn-press bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
                         <i class="fa-regular fa-copy"></i> Copy Link
                     </button>
                 </div>
@@ -88,64 +121,70 @@
             </a>
         </div>
 
+        <!-- Thông báo không tìm thấy -->
+        <div id="no-results" class="hidden text-center py-10 text-slate-500 text-sm">
+            <i class="fa-solid fa-face-frown text-3xl mb-2 text-slate-600"></i>
+            <p>Không tìm thấy script nào phù hợp với từ khóa bạn nhập!</p>
+        </div>
+
         <div class="space-y-6" id="script-container">
             
             <!-- Item 1 -->
-            <div class="script-item bg-slate-900/90 border border-slate-800 rounded-xl p-4 shadow-lg transition hover:border-slate-700 backdrop-blur-md" data-title="remotespy v2 theo dõi fireserver invokeserver">
+            <div class="script-card bg-slate-900/90 backdrop-blur border border-slate-800 rounded-xl p-4 shadow-lg transition hover:border-slate-700" data-name="remotespy v2 theo dõi fireserver invokeserver">
                 <div class="flex justify-between items-center mb-2">
-                    <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400">RemoteSpy V2 - Theo dõi FireServer / InvokeServer</span>
-                    <button onclick="copyScript(this, 0)" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 btn-click-effect">
+                    <span class="script-title text-xs font-semibold uppercase tracking-wider text-cyan-400">RemoteSpy V2 - Theo dõi FireServer / InvokeServer</span>
+                    <button onclick="copyScript(this, 0)" class="btn-press bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
                         <i class="fa-regular fa-copy"></i> Sao chép
                     </button>
                 </div>
-                <textarea readonly onclick="this.select()" class="w-full h-20 bg-slate-950 text-slate-300 font-mono text-xs p-3 rounded-lg border border-slate-800 focus:outline-none resize-none cursor-pointer">--📡 RemoteSpy V2 - Theo dõi FireServer / InvokeServer
+                <textarea readonly class="script-textarea w-full h-20 bg-slate-950 text-slate-300 font-mono text-xs p-3 rounded-lg border border-slate-800 focus:outline-none resize-none">--📡 RemoteSpy V2 - Theo dõi FireServer / InvokeServer
 loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/SimpleSpyV3/main.lua"))()</textarea>
             </div>
 
             <!-- Item 2 -->
-            <div class="script-item bg-slate-900/90 border border-slate-800 rounded-xl p-4 shadow-lg transition hover:border-slate-700 backdrop-blur-md" data-title="azura_k666 panel tăng tốc v1 vặn tay ga">
+            <div class="script-card bg-slate-900/90 backdrop-blur border border-slate-800 rounded-xl p-4 shadow-lg transition hover:border-slate-700" data-name="azura_k666/panel tăng tốc v1 vặn tay ga">
                 <div class="flex justify-between items-center mb-2">
-                    <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400">AZURA_K666/PANEL Tăng tốc v1</span>
-                    <button onclick="copyScript(this, 1)" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 btn-click-effect">
+                    <span class="script-title text-xs font-semibold uppercase tracking-wider text-cyan-400">AZURA_K666/PANEL Tăng tốc v1</span>
+                    <button onclick="copyScript(this, 1)" class="btn-press bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
                         <i class="fa-regular fa-copy"></i> Sao chép
                     </button>
                 </div>
-                <textarea readonly onclick="this.select()" class="w-full h-20 bg-slate-950 text-slate-300 font-mono text-xs p-3 rounded-lg border border-slate-800 focus:outline-none resize-none cursor-pointer">-- 「AZURA_K666/PANEL」 tăng tốc v1
+                <textarea readonly class="script-textarea w-full h-20 bg-slate-950 text-slate-300 font-mono text-xs p-3 rounded-lg border border-slate-800 focus:outline-none resize-none">-- 「AZURA_K666/PANEL」 tăng tốc v1
 loadstring(game:HttpGet("https://pastefy.app/oi1L5X4D/raw?part=V%E1%BA%B7n%20tay%20ga"))()</textarea>
             </div>
 
             <!-- Item 3 -->
-            <div class="script-item bg-slate-900/90 border border-slate-800 rounded-xl p-4 shadow-lg transition hover:border-slate-700 backdrop-blur-md" data-title="dex explorer plus universal script">
+            <div class="script-card bg-slate-900/90 backdrop-blur border border-slate-800 rounded-xl p-4 shadow-lg transition hover:border-slate-700" data-name="dex explorer plus universal">
                 <div class="flex justify-between items-center mb-2">
-                    <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400">Dex Explorer Plus</span>
-                    <button onclick="copyScript(this, 2)" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 btn-click-effect">
+                    <span class="script-title text-xs font-semibold uppercase tracking-wider text-cyan-400">Dex Explorer Plus</span>
+                    <button onclick="copyScript(this, 2)" class="btn-press bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
                         <i class="fa-regular fa-copy"></i> Sao chép
                     </button>
                 </div>
-                <textarea readonly onclick="this.select()" class="w-full h-20 bg-slate-950 text-slate-300 font-mono text-xs p-3 rounded-lg border border-slate-800 focus:outline-none resize-none cursor-pointer">loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Dex-Explorer-plus-50432"))()</textarea>
+                <textarea readonly class="script-textarea w-full h-20 bg-slate-950 text-slate-300 font-mono text-xs p-3 rounded-lg border border-slate-800 focus:outline-none resize-none">loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Dex-Explorer-plus-50432"))()</textarea>
             </div>
 
             <!-- Item 4 -->
-            <div class="script-item bg-slate-900/90 border border-slate-800 rounded-xl p-4 shadow-lg transition hover:border-slate-700 backdrop-blur-md" data-title="azura_k666 panel bypass sv">
+            <div class="script-card bg-slate-900/90 backdrop-blur border border-slate-800 rounded-xl p-4 shadow-lg transition hover:border-slate-700" data-name="azura_k666/panel bypass sv">
                 <div class="flex justify-between items-center mb-2">
-                    <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400">AZURA_K666/PANEL Bypass SV</span>
-                    <button onclick="copyScript(this, 3)" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 btn-click-effect">
+                    <span class="script-title text-xs font-semibold uppercase tracking-wider text-cyan-400">AZURA_K666/PANEL Bypass SV</span>
+                    <button onclick="copyScript(this, 3)" class="btn-press bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
                         <i class="fa-regular fa-copy"></i> Sao chép
                     </button>
                 </div>
-                <textarea readonly onclick="this.select()" class="w-full h-20 bg-slate-950 text-slate-300 font-mono text-xs p-3 rounded-lg border border-slate-800 focus:outline-none resize-none cursor-pointer">-- [{「AZURA_K666/PANEL」 bypass sv}]
+                <textarea readonly class="script-textarea w-full h-20 bg-slate-950 text-slate-300 font-mono text-xs p-3 rounded-lg border border-slate-800 focus:outline-none resize-none">-- [{「AZURA_K666/PANEL」 bypass sv}]
 loadstring(game:HttpGet("https://pastefy.app/MzktwQsh/raw"))()</textarea>
             </div>
 
             <!-- Item 5 -->
-            <div class="script-item bg-slate-900/90 border border-slate-800 rounded-xl p-4 shadow-lg transition hover:border-slate-700 backdrop-blur-md" data-title="azura_k666 panel anim log animation">
+            <div class="script-card bg-slate-900/90 backdrop-blur border border-slate-800 rounded-xl p-4 shadow-lg transition hover:border-slate-700" data-name="azura_k666/panel anim log">
                 <div class="flex justify-between items-center mb-2">
-                    <span class="text-xs font-semibold uppercase tracking-wider text-cyan-400">AZURA_K666/PANEL Anim Log</span>
-                    <button onclick="copyScript(this, 4)" class="bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 btn-click-effect">
+                    <span class="script-title text-xs font-semibold uppercase tracking-wider text-cyan-400">AZURA_K666/PANEL Anim Log</span>
+                    <button onclick="copyScript(this, 4)" class="btn-press bg-cyan-600 hover:bg-cyan-500 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition">
                         <i class="fa-regular fa-copy"></i> Sao chép
                     </button>
                 </div>
-                <textarea readonly onclick="this.select()" class="w-full h-20 bg-slate-950 text-slate-300 font-mono text-xs p-3 rounded-lg border border-slate-800 focus:outline-none resize-none cursor-pointer">-- [{「AZURA_K666/PANEL」 anim log}]
+                <textarea readonly class="script-textarea w-full h-20 bg-slate-950 text-slate-300 font-mono text-xs p-3 rounded-lg border border-slate-800 focus:outline-none resize-none">-- [{「AZURA_K666/PANEL」 anim log}]
 loadstring(game:HttpGet("https://pastefy.app/aMtrWYLT/raw?part=Anim%20log"))()</textarea>
             </div>
 
@@ -176,23 +215,35 @@ loadstring(game:HttpGet("https://pastefy.app/aMtrWYLT/raw?part=Anim%20log"))()</
             }
         });
 
-        // Tính năng tìm kiếm và lọc script
+        // Chức năng tìm kiếm và lọc script
         function filterScripts() {
-            const input = document.getElementById('search-input').value.toLowerCase().trim();
-            const items = document.querySelectorAll('.script-item');
+            const input = document.getElementById('search-input');
+            const filter = input.value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.script-card');
+            const noResults = document.getElementById('no-results');
+            let visibleCount = 0;
 
-            items.forEach(item => {
-                const titleAttr = item.getAttribute('data-title') || '';
-                const textareaContent = item.querySelector('textarea').value.toLowerCase();
-                
-                if (titleAttr.includes(input) || textareaContent.includes(input)) {
-                    item.style.display = 'block';
+            cards.forEach(card => {
+                const searchData = card.getAttribute('data-name') || '';
+                const titleText = card.querySelector('.script-title').textContent.toLowerCase();
+                const codeText = card.querySelector('.script-textarea').value.toLowerCase();
+
+                if (searchData.includes(filter) || titleText.includes(filter) || codeText.includes(filter)) {
+                    card.style.display = '';
+                    visibleCount++;
                 } else {
-                    item.style.display = 'none';
+                    card.style.display = 'none';
                 }
             });
+
+            if (visibleCount === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
         }
 
+        // Copy Link Web
         function copyWebLink(btn) {
             const webUrlInput = document.getElementById('web-url-input');
             webUrlInput.select();
@@ -219,15 +270,16 @@ loadstring(game:HttpGet("https://pastefy.app/aMtrWYLT/raw?part=Anim%20log"))()</
             }, 2000);
         }
 
+        // Copy toàn bộ nội dung script trong ô và tự động bôi đen toàn bộ ô chứa
         function copyScript(btn, index) {
-            const textareas = document.querySelectorAll('textarea');
+            const textareas = document.querySelectorAll('.script-textarea');
             const targetTextarea = textareas[index];
-            
-            // Tự động chọn toàn bộ nội dung trong ô chứa
+            const textToCopy = targetTextarea.value;
+
+            // Tự động bôi đen/chọn hết toàn bộ văn bản trong ô chứa
+            targetTextarea.focus();
             targetTextarea.select();
             targetTextarea.setSelectionRange(0, 99999);
-
-            const textToCopy = targetTextarea.value;
 
             document.addEventListener('copy', function(e) {
                 e.clipboardData.setData('text/plain', textToCopy);
