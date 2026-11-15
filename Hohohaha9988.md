@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lua CODES/SCRIPT - [{(「AZURA_K666/PANEL」)}]</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Chủ đề Bí ẩn Đen tối / Void Mystical Theme */
+        body {
+            background-color: #030305;
+            color: #e2e8f0;
+            position: relative;
+            overflow-x: hidden;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        /* Canvas hiệu ứng nền 3D bay bay & tương tác */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Hiệu ứng 3D cho nút Discord */
+        .discord-btn-3d {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 6px 0 0 #1e1b4b, 0 10px 25px -3px rgba(0, 0, 0, 0.8), 0 0 15px rgba(99, 102, 241, 0.3);
+        }
+        .discord-btn-3d:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 0 #1e1b4b, 0 15px 30px -3px rgba(99, 102, 241, 0.5), 0 0 25px rgba(99, 102, 241, 0.6);
+        }
+        .discord-btn-3d:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 0 #1e1b4b, 0 5px 10px -2px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Hiệu ứng nhấn nút */
+        .btn-click-effect {
+            transition: transform 0.1s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        .btn-click-effect:active {
+            transform: scale(0.95);
+        }
+
+        /* Thẻ script với kính mờ và viền huyền bí */
+        .script-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(139, 92, 246, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+        }
+        .script-card:hover {
+            border-color: rgba(168, 85, 247, 0.5);
+            box-shadow: 0 12px 40px 0 rgba(139, 92, 246, 0.25), inset 0 0 15px rgba(168, 85, 247, 0.05);
+            transform: translateY(-2px);
+        }
+
+        /* Tùy chỉnh thanh cuộn mang phong cách bóng đêm */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #030305;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e1b4b;
+            border-radius: 4px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #312e81;
+        }
+
+        .mystic-glow-text {
+            text-shadow: 0 0 20px rgba(168, 85, 247, 0.6), 0 0 40px rgba(99, 102, 241, 0.4);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center py-10 px-4">
+
+    <!-- Canvas Hiệu ứng Nền 3D Không gian Huyền Bí -->
+    <canvas id="bg-canvas"></canvas>
+
+    <div class="w-full max-w-3xl z-10">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-purple-400 via-indigo-300 to-cyan-400 bg-clip-text text-transparent mb-2 mystic-glow-text">
+                CODES/SCRIPT - [{(「AZURA_K666/PANEL」)}]
+            </h1>
+            <p class="text-purple-300/70 text-sm tracking-wide">Kho web script 「AZURA_K666/PANEL  &bull; CHUYÊN VỀ CODE/SCRIPT</p>
+        </header>
+
+        <!-- Ô tìm kiếm script -->
+        <div class="mb-6 relative">
+            <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-purple-400/60">
+                <i class="fa-solid fa-search"></i>
+            </div>
+            <input type="text" id="search-input" onkeyup="filterScripts()" placeholder="Tìm kiếm script theo tên (ví dụ: admin, tsb, rivals, brookhaven, bypass...)..." 
+                class="w-full bg-black/80 text-purple-100 placeholder-purple-400/40 text-sm pl-10 pr-4 py-3.5 rounded-xl border border-purple-900/50 focus:border-purple-500 focus:outline-none shadow-[0_0_20px_rgba(0,0,0,0.8)] focus:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition backdrop-blur-md">
+        </div>
+
+        <!-- Khung hiển thị đường dẫn Web HTTPS -->
+        <div class="bg-black/75 border border-purple-500/30 rounded-xl p-4 shadow-[0_0_30px_rgba(0,0,0,0.9)] mb-6 backdrop-blur-md">
+            <div class="flex justify-between items-center mb-2">
+                <span class="text-xs font-semibold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5 drop-shadow-[0_0_8px_rgba(52,211,153,0.5)]">
+                    <i class="fa-solid fa-globe"></i> link wed chính thức ở đây 🔥
+                </span>
+                <div class="flex gap-2">
+                    <a id="web-link-btn" href="#" target="_blank" class="bg-emerald-700/80 hover:bg-emerald-600 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(52,211,153,0.3)]">
+                        <i class="fa-solid fa-external-link-alt"></i> Mở Web
+                    </a>
+                    <button onclick="copyWebLink(this)" class="bg-purple-700/80 hover:bg-purple-600 text-white text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(168,85,247,0.3)]">
+                        <i class="fa-regular fa-copy"></i> Copy Link
+                    </button>
+                </div>
+            </div>
+            <input type="text" id="web-url-input" readonly class="w-full bg-black/90 text-emerald-300 font-mono text-xs p-3 rounded-lg border border-purple-900/40 focus:outline-none select-all shadow-inner" value="">
+        </div>
+
+        <!-- Nút Discord 3D -->
+        <div class="mb-10">
+            <a href="https://discord.gg/vJpduemMH" target="_blank" rel="noopener noreferrer" 
+               class="discord-btn-3d flex items-center justify-center gap-3 w-full bg-gradient-to-r from-indigo-950 via-purple-950 to-slate-950 border border-purple-500/40 text-purple-100 font-semibold py-3.5 px-6 rounded-xl text-sm md:text-base tracking-wide">
+                <i class="fa-brands fa-discord text-2xl text-indigo-400 animate-pulse drop-shadow-[0_0_10px_rgba(129,140,248,0.8)]"></i>
+                <span>Tham gia Discord chính thức của AZURA_K666</span>
+                <i class="fa-solid fa-arrow-up-right-from-square text-xs text-purple-300 opacity-80"></i>
+            </a>
+        </div>
+
+        <!-- CONTAINER CHÍNH -->
+        <div class="space-y-10" id="script-container">
+            
+            <!-- KHU VỰC 1: SCRIPT LẺ TẺ -->
+            <section class="category-section" data-category="script lẻ tẻ">
+                <div class="flex items-center gap-3 mb-4 pb-2 border-b border-purple-500/30">
+                    <i class="fa-solid fa-cubes text-purple-400 text-xl drop-shadow-[0_0_8px_rgba(192,132,252,0.8)]"></i>
+                    <h2 class="text-lg font-bold uppercase tracking-wider text-purple-300 drop-shadow-[0_0_10px_rgba(192,132,252,0.5)]">SCRIPT LẺ TẺ</h2>
+                </div>
+                <div class="space-y-4">
+                    
+                    <!-- Card: Bố mày trùm là lắc đây -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="bố mày trùm là lắc đây">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-purple-300">Bố Mày Trùm Là Lắc Đây</span>
+                            <button onclick="copyScript(this)" class="bg-purple-800/80 hover:bg-purple-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(168,85,247,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- bố mày trùm là lắc đây
+loadstring(game:HttpGet("https://pastefy.app/6FGXto1y/raw"))()</textarea>
+                    </div>
+
+                    <!-- Card: Azura_k666 panel lưu vị trí -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="azura_k666 panel lưu vị trí">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-purple-300">AZURA_K666/PANEL Lưu Vị Trí</span>
+                            <button onclick="copyScript(this)" class="bg-purple-800/80 hover:bg-purple-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(168,85,247,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- 「AZURA_K666/PANEL」 lưu vị trí
+loadstring(game:HttpGet("https://gist.githubusercontent.com/nguoitalathaingoc-netizen/4a7275a7180346c354bef7894668c4b4/raw/"))()</textarea>
+                    </div>
+
+                    <!-- Card: Hitbox All -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="hitbox all">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-purple-300">Hitbox All</span>
+                            <button onclick="copyScript(this)" class="bg-purple-800/80 hover:bg-purple-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(168,85,247,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- hitbox all
+loadstring(game:HttpGet("https://scriptblox.com/raw/Universal-Script-Hitbox-226260"))()</textarea>
+                    </div>
+
+                    <!-- Card: AntiAFK -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="antiafk anti afk">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-purple-300">Anti AFK</span>
+                            <button onclick="copyScript(this)" class="bg-purple-800/80 hover:bg-purple-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(168,85,247,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- antiafk
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Genesisuii/Genesisuii/refs/heads/main/Anti%20AFK%20script", true))()</textarea>
+                    </div>
+
+                    <!-- Card: Tàng hình FE R15 -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="tàng hình fe r15 invisible r15">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-purple-300">Tàng Hình FE R15</span>
+                            <button onclick="copyScript(this)" class="bg-purple-800/80 hover:bg-purple-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(168,85,247,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- tàng hình fe r15
+loadstring(game:HttpGet("https://gist.githubusercontent.com/ngongoc0928/4ba295f49dc0eae4649db0fd335fcfea/raw/86bee069438ecd6d9b09f97f892f8a9cb90740f6/Invisible%2520r15"))()</textarea>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="azura_k666 panel tăng tốc v1 vặn tay ga">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-purple-300">AZURA_K666/PANEL Tăng tốc v1</span>
+                            <button onclick="copyScript(this)" class="bg-purple-800/80 hover:bg-purple-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(168,85,247,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- 「AZURA_K666/PANEL」 tăng tốc v1
+loadstring(game:HttpGet("https://pastefy.app/oi1L5X4D/raw?part=V%E1%BA%B7n%20tay%20ga"))()</textarea>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="dex explorer plus universal script">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-purple-300">Dex Explorer Plus</span>
+                            <button onclick="copyScript(this)" class="bg-purple-800/80 hover:bg-purple-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(168,85,247,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-Dex-Explorer-plus-50432"))()</textarea>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="azura_k666 panel bypass sv">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-purple-300">AZURA_K666/PANEL Bypass SV</span>
+                            <button onclick="copyScript(this)" class="bg-purple-800/80 hover:bg-purple-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(168,85,247,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- [{「AZURA_K666/PANEL」 bypass sv}]
+loadstring(game:HttpGet("https://pastefy.app/MzktwQsh/raw"))()</textarea>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="azura_k666 panel anim log animation">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-purple-300">AZURA_K666/PANEL Anim Log</span>
+                            <button onclick="copyScript(this)" class="bg-purple-800/80 hover:bg-purple-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(168,85,247,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- [{「AZURA_K666/PANEL」 anim log}]
+loadstring(game:HttpGet("https://pastefy.app/aMtrWYLT/raw?part=Anim%20log"))()</textarea>
+                    </div>
+
+                    <!-- Card 6 -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="admin nameless admin">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-purple-300">Nameless Admin</span>
+                            <button onclick="copyScript(this)" class="bg-purple-800/80 hover:bg-purple-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(168,85,247,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- admin
+loadstring(game:HttpGet("https://raw.githubusercontent.com/ltseverydayyou/Nameless-Admin/main/Source.lua"))()</textarea>
+                    </div>
+
+                    <!-- Card 7 -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="aimlookat aim look at">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-purple-300">Aim Look At</span>
+                            <button onclick="copyScript(this)" class="bg-purple-800/80 hover:bg-purple-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(168,85,247,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- aimloookat
+loadstring(game:HttpGet("https://gist.githubusercontent.com/ngongoc0928/e11f179ecfd20b75e6db825a52baff23/raw/38f90806dc595570bfc63382d3cf678aa654dec2/Aimlookat"))()</textarea>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- KHU VỰC MỚI: CỘNG ĐỒNG VIỆT NAM -->
+            <section class="category-section" data-category="cộng đồng việt nam">
+                <div class="flex items-center gap-3 mb-4 pb-2 border-b border-amber-500/30">
+                    <i class="fa-solid fa-users text-amber-400 text-xl drop-shadow-[0_0_8px_rgba(251,191,36,0.8)]"></i>
+                    <h2 class="text-lg font-bold uppercase tracking-wider text-amber-300 drop-shadow-[0_0_10px_rgba(251,191,36,0.5)]">CỘNG ĐỒNG VIỆT NAM</h2>
+                </div>
+                <div class="space-y-4">
+                    
+                    <!-- Card: Azura Tools CDVN -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="azura_k666 panel azura-tools cộng đồng việt nam">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-amber-300">AZURA_K666/PANEL - AZURA-TOOLS</span>
+                            <button onclick="copyScript(this)" class="bg-amber-800/80 hover:bg-amber-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(251,191,36,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- [{「AZURA_K666/PANEL」 🎃AZURA-TOOLS🎃  }]
+loadstring(game:HttpGet("https://gist.githubusercontent.com/nguoitalathaingoc-netizen/9786d5b7905e6e52f6edc54241fdb90d/raw/Tools-cdvn"))()</textarea>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- KHU VỰC 2: CHIẾN TRƯỜNG MẠNH NHẤT -->
+            <section class="category-section" data-category="chiến trường mạnh nhất tsb">
+                <div class="flex items-center gap-3 mb-4 pb-2 border-b border-indigo-500/30">
+                    <i class="fa-solid fa-fire text-indigo-400 text-xl drop-shadow-[0_0_8px_rgba(129,140,248,0.8)]"></i>
+                    <h2 class="text-lg font-bold uppercase tracking-wider text-indigo-300 drop-shadow-[0_0_10px_rgba(129,140,248,0.5)]">CHIẾN TRƯỜNG MẠNH NHẤT (TSB)</h2>
+                </div>
+                <div class="space-y-4">
+                    
+                    <!-- Card: Auto Fram Candy TSB -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="new update full fram boss fram cửa auto fram candy tsb">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-indigo-300">AUTO FRAM CANDY TSB - NEW UPDATE FULL</span>
+                            <button onclick="copyScript(this)" class="bg-indigo-800/80 hover:bg-indigo-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(99,102,241,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- NEW UPDATE FULL 
+-- fram boss, fram cửa
+-- [{「AZURA_K666/PANEL」 AUTO-FRAM-CANDY-TSB}]
+loadstring(game:HttpGet("https://gist.githubusercontent.com/nguoitalathaingoc-netizen/1ede004bc49a052efa91123ef0d8ac71/raw/Candy-tsb"))()</textarea>
+                    </div>
+
+                    <!-- Card 1 -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="tsb script hệ thống 3d the strongest battlegrounds">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-indigo-300">TSB Script Hệ Thống 3D</span>
+                            <button onclick="copyScript(this)" class="bg-indigo-800/80 hover:bg-indigo-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(99,102,241,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- tsb script hệ thống 3D
+loadstring(game:HttpGet("https://gist.githubusercontent.com/nguoitalathaingoc-netizen/5af37ac508d52bde7614cbccf0049765/raw/52c88b6a224ff1d6850f565dc7e84f7468226dd1/H%25E1%25BB%2587%2520th%25E1%25BB%2591ng%2520tsb"))()</textarea>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="fix lag nhẹ fps boost">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-indigo-300">Fix Lag Nhẹ</span>
+                            <button onclick="copyScript(this)" class="bg-indigo-800/80 hover:bg-indigo-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(99,102,241,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- fix lag nhẹ 
+loadstring(game:HttpGet("https://pastefy.app/tIdoT2ze/raw"))()</textarea>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="kiba tech">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-indigo-300">Kiba Tech</span>
+                            <button onclick="copyScript(this)" class="bg-indigo-800/80 hover:bg-indigo-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(99,102,241,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- kiba tech
+loadstring(game:HttpGet("https://pastefy.app/s7Qk0Qgb/raw"))()</textarea>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="xy3rxlol loader">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-indigo-300">Xy3rxlol</span>
+                            <button onclick="copyScript(this)" class="bg-indigo-800/80 hover:bg-indigo-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(99,102,241,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- xy3rxlol
+loadstring(game:HttpGet("https://raw.githubusercontent.com/xy3rxlol/xy3rxlol/refs/heads/main/loader",true))()</textarea>
+                    </div>
+
+                    <!-- Card 5 -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="loaders vexonhub vexon hub">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-indigo-300">VexonHub Loaders</span>
+                            <button onclick="copyScript(this)" class="bg-indigo-800/80 hover:bg-indigo-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(99,102,241,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- loaders
+loadstring(game:HttpGet("https://raw.githubusercontent.com/DiosDi/VexonHub/refs/heads/main/VexonHub"))()</textarea>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- KHU VỰC MỚI: BROOKHAVEN -->
+            <section class="category-section" data-category="brookhaven">
+                <div class="flex items-center gap-3 mb-4 pb-2 border-b border-pink-500/30">
+                    <i class="fa-solid fa-house text-pink-400 text-xl drop-shadow-[0_0_8px_rgba(244,114,182,0.8)]"></i>
+                    <h2 class="text-lg font-bold uppercase tracking-wider text-pink-300 drop-shadow-[0_0_10px_rgba(244,114,182,0.5)]">BROOKHAVEN</h2>
+                </div>
+                <div class="space-y-4">
+                    
+                    <!-- Card: Dick -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="azura_k666 panel dick chym to">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-pink-300">AZURA_K666/PANEL - Dick</span>
+                            <button onclick="copyScript(this)" class="bg-pink-800/80 hover:bg-pink-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(244,114,182,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- 「AZURA_K666/PANEL」 dick
+loadstring(game:HttpGet("https://pastefy.app/9yPd7RwW/raw?part=Chym to"))()</textarea>
+                    </div>
+
+                    <!-- Card: Kill -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="azura_k666 panel kill">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-pink-300">AZURA_K666/PANEL - Kill</span>
+                            <button onclick="copyScript(this)" class="bg-pink-800/80 hover:bg-pink-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(244,114,182,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- 「AZURA_K666/PANEL」 kill
+loadstring(game:HttpGet("https://pastefy.app/vi41X102/raw?part=「AZURA_K666/PANEL」 kill"))()</textarea>
+                    </div>
+
+                    <!-- Card: Auto Part -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="azura_k666 panel auto part">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-pink-300">AZURA_K666/PANEL - Auto Part</span>
+                            <button onclick="copyScript(this)" class="bg-pink-800/80 hover:bg-pink-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(244,114,182,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- 「AZURA_K666/PANEL」Auto Part
+loadstring(game:HttpGet("https://gist.githubusercontent.com/nguoitalathaingoc-netizen/96486247f776da871f1770d68e592a89/raw/1_UI_fart"))()</textarea>
+                    </div>
+
+                    <!-- Card: Fling Door V2 -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="azura_k666 panel fling door v2">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-pink-300">AZURA_K666/PANEL - Fling Door V2</span>
+                            <button onclick="copyScript(this)" class="bg-pink-800/80 hover:bg-pink-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(244,114,182,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- 「AZURA_K666/PANEL」 fling door v2
+loadstring(game:HttpGet("https://gist.githubusercontent.com/nguoitalathaingoc-netizen/b876d9ebae2801019923bcf8dc715e78/raw/Flingdoor"))()</textarea>
+                    </div>
+
+                    <!-- Card: Tù Kid -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="azura_k666 panel tù kid lũ kid">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-pink-300">AZURA_K666/PANEL - Tù Kid</span>
+                            <button onclick="copyScript(this)" class="bg-pink-800/80 hover:bg-pink-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(244,114,182,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- 「AZURA_K666/PANEL」 tù kid
+loadstring(game:HttpGet("https://gist.githubusercontent.com/nguoitalathaingoc-netizen/54ff1dc96c0aa38c215840387d80ddff/raw/L%25C5%25A9%2520kid"))()</textarea>
+                    </div>
+
+                    <!-- Card: Phi Cơ -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="azura_k666 panel phi cơ brookhaven">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-pink-300">AZURA_K666/PANEL - Phi Cơ</span>
+                            <button onclick="copyScript(this)" class="bg-pink-800/80 hover:bg-pink-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(244,114,182,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- [{「AZURA_K666/PANEL」 PHI CƠ}]
+loadstring(game:HttpGet("https://pastefy.app/1cxYPFnt/raw?part=Phi%20c%C6%A1%20brookhaven"))()</textarea>
+                    </div>
+
+                    <!-- Card: Music DJ Remix Brookhaven -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="azura_k666 panel music dj remix brookhaven">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-pink-300">AZURA_K666/PANEL - MUSIC - DJ - REMIX</span>
+                            <button onclick="copyScript(this)" class="bg-pink-800/80 hover:bg-pink-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(244,114,182,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-28 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- [[ AZURA_K666/PANEL - MUSIC - DJ - REMIX - BROOKHAVEN]] --
+
+local UI_URL = "https://gist.githubusercontent.com/nguoitalathaingoc-netizen/f5070041359c7e08a48cd5f565bc751b/raw/UI"
+local BUTTONS_URL = "https://gist.githubusercontent.com/nguoitalathaingoc-netizen/724827459fdc5c688bd2bce37ab95b6c/raw/N%25C3%25BAt"
+
+local successUI, errUI = pcall(function()
+    loadstring(game:HttpGet(UI_URL))()
+end)
+
+if not successUI then
+    warn("Lỗi tải UI Framework:", errUI)
+    return
+end
+
+local successBtn, errBtn = pcall(function()
+    loadstring(game:HttpGet(BUTTONS_URL))()
+end)
+
+if not successBtn then
+    warn("Lỗi tải Button Framework:", errBtn)
+    return
+end
+
+print("「AZURA_K666/PANEL」 đã khởi chạy thành công!")</textarea>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- KHU VỰC 3: SCRIPT RIVALS -->
+            <section class="category-section" data-category="script rivals">
+                <div class="flex items-center gap-3 mb-4 pb-2 border-b border-cyan-500/30">
+                    <i class="fa-solid fa-crosshairs text-cyan-400 text-xl drop-shadow-[0_0_8px_rgba(34,211,238,0.8)]"></i>
+                    <h2 class="text-lg font-bold uppercase tracking-wider text-cyan-300 drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">SCRIPT RIVALS</h2>
+                </div>
+                <div class="space-y-4">
+                    
+                    <!-- Card 1 -->
+                    <div class="script-card rounded-xl p-4 shadow-lg" data-name="script rivals 🕴️🕴️🆒">
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-cyan-300">Rivals Script 🕴️🕴️🆒</span>
+                            <button onclick="copyScript(this)" class="bg-cyan-800/80 hover:bg-cyan-700 text-purple-100 text-xs px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition btn-click-effect shadow-[0_0_10px_rgba(34,211,238,0.3)]">
+                                <i class="fa-regular fa-copy"></i> Sao chép
+                            </button>
+                        </div>
+                        <textarea readonly onclick="this.select()" class="script-textarea w-full h-20 bg-black/90 text-purple-200/90 font-mono text-xs p-3 rounded-lg border border-purple-950 focus:outline-none resize-none cursor-pointer shadow-inner" title="Nhấn để chọn toàn bộ">-- 🕴️🕴️🆒
+loadstring(game:HttpGet("https://pastefy.app/YiGY38uo/raw"))()</textarea>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+
+        <!-- Thông báo khi không tìm thấy kết quả -->
+        <div id="no-result" class="hidden text-center py-12 text-purple-400/60 text-sm">
+            <i class="fa-solid fa-face-frown text-3xl mb-3 text-purple-500/50"></i>
+            <p>Không tìm thấy script nào phù hợp với từ khóa của bạn!</p>
+        </div>
+
+        <footer class="text-center mt-12 text-xs text-purple-400/50 tracking-wider">
+            &copy; THANK YOU ĐÃ ĐỒNG HÀNH TỚI CUỐI SCRIPT CỦA TÔI XINH CHÂN THÀNH CẢM ƠN 🥳🥳🥳
+        </footer>
+    </div>
+
+    <script>
+        // Hiệu ứng nền 3D Canvas Vô Cực & Hạt Bay Huyễn Hoặc
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        let particles = [];
+        const numParticles = 65;
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = (Math.random() - 0.5) * canvas.width * 1.5 + canvas.width / 2;
+                this.y = (Math.random() - 0.5) * canvas.height * 1.5 + canvas.height / 2;
+                this.z = Math.random() * 1000 + 100;
+                this.size = Math.random() * 2 + 0.8;
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.vy = (Math.random() - 0.5) * 0.3 - 0.2;
+                this.color = Math.random() > 0.5 ? 'rgba(168, 85, 247, ' : 'rgba(99, 102, 241, ';
+            }
+            update() {
+                this.z -= 0.8;
+                this.x += this.vx * 2;
+                this.y += this.vy * 2;
+                if (this.z <= 0 || this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
+                    this.reset();
+                    this.z = 1000;
+                }
+            }
+            draw() {
+                let k = 400 / this.z;
+                let px = (this.x - canvas.width / 2) * k + canvas.width / 2;
+                let py = (this.y - canvas.height / 2) * k + canvas.height / 2;
+
+                if (px >= 0 && px <= canvas.width && py >= 0 && py <= canvas.height) {
+                    let pSize = Math.max(0, this.size * k);
+                    let alpha = Math.min(1, (1000 - this.z) / 800);
+                    ctx.beginPath();
+                    ctx.arc(px, py, pSize, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color + alpha + ')';
+                    ctx.shadowBlur = 12;
+                    ctx.shadowColor = this.color + '0.8)';
+                    ctx.fill();
+                }
+            }
+        }
+
+        for (let i = 0; i < numParticles; i++) {
+            particles.push(new Particle());
+        }
+
+        let angle = 0;
+        function animateBg() {
+            ctx.fillStyle = 'rgba(3, 3, 5, 0.25)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Vẽ hiệu ứng vòng quay năng lượng mờ ảo dạng lưới 3D tâm màn hình
+            ctx.save();
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+            angle += 0.001;
+            ctx.rotate(angle);
+            ctx.strokeStyle = 'rgba(139, 92, 246, 0.035)';
+            ctx.lineWidth = 1.5;
+            for (let i = 1; i <= 6; i++) {
+                ctx.beginPath();
+                ctx.arc(0, 0, i * 140, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+            ctx.restore();
+
+            // Cập nhật và vẽ các hạt 3D bay
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            requestAnimationFrame(animateBg);
+        }
+        animateBg();
+
+        // Tự động nhận diện và hiển thị link HTTPS hiện tại của trang web
+        window.addEventListener('DOMContentLoaded', () => {
+            const currentUrl = window.location.href;
+            const webUrlInput = document.getElementById('web-url-input');
+            const webLinkBtn = document.getElementById('web-link-btn');
+
+            if (currentUrl.startsWith('http://') || currentUrl.startsWith('https://')) {
+                webUrlInput.value = currentUrl;
+                webLinkBtn.href = currentUrl;
+            } else {
+                webUrlInput.value = "Hãy tải file lên GitHub Pages, Vercel hoặc Netlify để nhận link https:// chính thức!";
+                webLinkBtn.href = "#";
+                webLinkBtn.onclick = (e) => {
+                    e.preventDefault();
+                    showCustomToast("Bạn cần đăng file lên GitHub Pages, Netlify hoặc Vercel để có đường dẫn https:// trực tiếp.");
+                };
+            }
+        });
+
+        // Hàm hiển thị thông báo
+        function showCustomToast(msg) {
+            let toast = document.getElementById('custom-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'custom-toast';
+                toast.className = 'fixed bottom-5 right-5 bg-black/90 border border-purple-500/50 text-purple-200 text-xs py-3 px-5 rounded-xl shadow-[0_0_20px_rgba(168,85,247,0.4)] z-50 transition-all duration-300 transform translate-y-10 opacity-0 backdrop-blur-md';
+                document.body.appendChild(toast);
+            }
+            toast.textContent = msg;
+            toast.classList.remove('translate-y-10', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-10', 'opacity-0');
+            }, 3000);
+        }
+
+        // Lọc script & khu vực theo từ khóa tìm kiếm
+        function filterScripts() {
+            const input = document.getElementById('search-input').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.script-card');
+            const sections = document.querySelectorAll('.category-section');
+            const noResult = document.getElementById('no-result');
+            let totalVisible = 0;
+
+            sections.forEach(section => {
+                let sectionVisibleCount = 0;
+                const sectionCards = section.querySelectorAll('.script-card');
+
+                sectionCards.forEach(card => {
+                    const name = card.getAttribute('data-name');
+                    const textareaText = card.querySelector('textarea').value.toLowerCase();
+                    const titleText = card.querySelector('span').textContent.toLowerCase();
+
+                    if (name.includes(input) || textareaText.includes(input) || titleText.includes(input)) {
+                        card.style.display = 'block';
+                        sectionVisibleCount++;
+                        totalVisible++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (sectionVisibleCount === 0) {
+                    section.style.display = 'none';
+                } else {
+                    section.style.display = 'block';
+                }
+            });
+
+            if (totalVisible === 0) {
+                noResult.classList.remove('hidden');
+            } else {
+                noResult.classList.add('hidden');
+            }
+        }
+
+        // Copy link trang web
+        function copyWebLink(btn) {
+            const webUrlInput = document.getElementById('web-url-input');
+            webUrlInput.select();
+            webUrlInput.setSelectionRange(0, 99999);
+
+            let success = false;
+            try {
+                success = document.execCommand('copy');
+            } catch (err) {}
+
+            if (!success && navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(webUrlInput.value);
+            }
+
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Đã chép link!';
+            btn.classList.remove('bg-purple-700/80', 'hover:bg-purple-600');
+            btn.classList.add('bg-emerald-600', 'hover:bg-emerald-500');
+
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
+                btn.classList.add('bg-purple-700/80', 'hover:bg-purple-600');
+            }, 2000);
+        }
+
+        // Copy script từng ô
+        function copyScript(btn) {
+            const parentCard = btn.closest('.script-card');
+            const targetTextarea = parentCard.querySelector('.script-textarea');
+            
+            targetTextarea.select();
+            targetTextarea.setSelectionRange(0, 99999);
+
+            const textToCopy = targetTextarea.value;
+
+            document.addEventListener('copy', function(e) {
+                e.clipboardData.setData('text/plain', textToCopy);
+                e.preventDefault();
+            }, { once: true });
+
+            let success = false;
+            try {
+                success = document.execCommand('copy');
+            } catch (err) {
+                console.error('Lỗi khi copy bằng execCommand', err);
+            }
+
+            if (!success && navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(textToCopy).catch(err => {
+                    console.error('Không thể sao chép: ', err);
+                });
+            }
+
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check"></i> Đã chép!';
+            btn.classList.remove('bg-purple-800/80', 'hover:bg-purple-700', 'bg-indigo-800/80', 'hover:bg-indigo-700', 'bg-cyan-800/80', 'hover:bg-cyan-700', 'bg-amber-800/80', 'hover:bg-amber-700', 'bg-pink-800/80', 'hover:bg-pink-700');
+            btn.classList.add('bg-emerald-600', 'hover:bg-emerald-500');
+
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+                btn.classList.remove('bg-emerald-600', 'hover:bg-emerald-500');
+                btn.classList.add('bg-purple-800/80', 'hover:bg-purple-700');
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
